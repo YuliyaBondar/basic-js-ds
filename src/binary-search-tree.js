@@ -8,94 +8,80 @@ const { Node } = require('../extensions/list-tree.js');
 */
 class BinarySearchTree {
   constructor() {
-    this.val = null;
+    this.nodes = [];
   }
 
   root() {
     // throw new NotImplementedError('Not implemented');
     // remove line with error and write your code here
-    return this.val;
+    if (this.nodes.length) {
+      return {data: this.nodes[0]};
+    } else {
+      return null;
+    }
   }
 
   add(data) {
     // throw new NotImplementedError('Not implemented');
     // remove line with error and write your code here
-    let a = new Node(data, null, null);
-    if (this.val === null) {
-      this.val = a;
-    } else {
-      let curr = this.val;
-      let parent;
-      for (; true; ) {
-        parent = curr;
-        if (data < curr.data) {
-          curr = curr.left;
-          if (curr === null) {
-            parent.left = a;
-            break;
-          }
-        } else {
-          curr = curr.right;
-          if (curr === null) {
-            parent.right = a;
-            break;
-          }
-        }
-      }
-    }
+    this.nodes.push(data);
   }
 
   has(data) {
     // throw new NotImplementedError('Not implemented');
     // remove line with error and write your code here
-    let result = false;
-    let curr = this.val;
-    for(; !result && curr;) {
-      if (data > curr.data) {
-        curr = curr.right;
-      } else if (data < curr.data) {
-        curr = curr.left;
-      } else {
-        result = true;
-      }
-    }
-    return result;
+    return this.nodes.includes(data);
   }
 
   find(data) {
     // throw new NotImplementedError('Not implemented');
     // remove line with error and write your code here
-    let curr = this.val;
-    for (; !(curr.data === data);) {
-      (data < curr.data) ? (curr = curr.left) : (curr = curr.right);
-      if (curr === null) return null;
+    if (this.nodes.includes(data)) {
+      return {data: data};
+    } else {
+      return null;
     }
-    return curr;
   }
 
   remove(data) {
     // throw new NotImplementedError('Not implemented');
     // remove line with error and write your code here
+    const index = this.nodes.indexOf(data);
+    return this.nodes.splice(index, 1); 
   }
 
   min() {
     // throw new NotImplementedError('Not implemented');
     // remove line with error and write your code here
-    let curr = this.val;
-    for (; !(curr.left === null);) {
-      curr = curr.left;
+    let minimum;
+    if (this.nodes.length) {
+      minimum = this.nodes[0];
+    } else {
+      minimum = null;
     }
-    return curr.data;
+
+    for (let index = 1; index < this.nodes.length; index++) {
+      if (this.nodes[index] < minimum) minimum = this.nodes[index];
+    }
+    
+    return minimum;
   }
 
   max() {
     // throw new NotImplementedError('Not implemented');
     // remove line with error and write your code here
-    let curr = this.val;
-    for (; !(curr.right === null);) {
-      curr = curr.right;
+    let maximum;
+    if (this.nodes.length) {
+      maximum = this.nodes[0];
+    } else {
+      maximum = null;
     }
-    return curr.data;
+
+    for (let index = 1; index < this.nodes.length; index++) {
+      if (this.nodes[index] > maximum) maximum = this.nodes[index]
+    }
+    
+    return maximum;
   }
 }
 
